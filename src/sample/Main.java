@@ -10,7 +10,11 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -25,10 +29,10 @@ public class Main extends Application {
     private static double l;
 
     final private static int WIDTH_SIM = 800;
-    final private static int HEIGHT_SIM = 750;
+    final private static int HEIGHT_SIM = 600;
 
-    final private static int WIDTH_GRAPH = 400;
-    final private static int HEIGHT_GRAPH = 250;
+    final private static int WIDTH_GRAPH = 600;
+    final private static int HEIGHT_GRAPH = 600;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -43,15 +47,13 @@ public class Main extends Application {
         Group root = new Group();
         //Создание области для анимации
         Group simulation = new Group();
-        //Создание области для первого графика
-        Group graph1 = new Group();
-        //Создание области для второго графика
-        Group graph2 = new Group();
-        //Создание области для третьего графика
-        Group graph3 = new Group();
+        //Создание области для графика
+        Group graphG = new Group();
 
-        //Создание кривошипно-шатунный механизма
+        //Создание кривошипно-шатунного механизма
         CrankMachine cM = new CrankMachine(w, r, l, WIDTH_SIM, HEIGHT_SIM);
+        //Создание графика
+        Graph graph = new Graph(r, l);
 
         //Настройка области симуляции
         simulation.maxWidth(WIDTH_SIM);
@@ -60,24 +62,15 @@ public class Main extends Application {
         simulation.setLayoutY(0);
         simulation.getChildren().addAll(cM.getPiston(), cM.getRoller(), cM.getRoller2(), cM.getCrank(), cM.getRod());
 
-        //Настройка области первого графика
-        graph1.maxWidth(WIDTH_GRAPH);
-        graph1.maxHeight(HEIGHT_GRAPH);
-        graph1.setLayoutX(WIDTH_SIM);
-        graph1.setLayoutY(0);
-        //Настройка области второго графика
-        graph1.maxWidth(WIDTH_GRAPH);
-        graph1.maxHeight(HEIGHT_GRAPH);
-        graph1.setLayoutX(WIDTH_SIM);
-        graph1.setLayoutY(HEIGHT_GRAPH);
-        //Настройка области третьего графика
-        graph1.maxWidth(WIDTH_GRAPH);
-        graph1.maxHeight(HEIGHT_GRAPH);
-        graph1.setLayoutX(WIDTH_SIM);
-        graph1.setLayoutY(HEIGHT_GRAPH * 2);
+        //Настройка области графика
+        graphG.maxWidth(WIDTH_GRAPH);
+        graphG.maxHeight(HEIGHT_GRAPH);
+        graphG.setLayoutX(WIDTH_SIM);
+        graphG.setLayoutY(0);
+        graphG.getChildren().addAll(graph.getChart());
 
         //Добавление всех областей на главный экран
-        root.getChildren().addAll(simulation, graph1, graph2, graph3);
+        root.getChildren().addAll(simulation, graphG);
         //Анимация механизма
         Animation anim = new Transition() {
             {
@@ -96,11 +89,15 @@ public class Main extends Application {
 
         Stage stage = new Stage();
         stage.setTitle("Crank Mechanism Simulation");
-        stage.setScene(new Scene(root, 1200, 750));
+        stage.setScene(new Scene(root, 1400, 600));
         stage.show();
 
 
         ((Node) (event.getSource())).getScene().getWindow().hide();
+    }
+
+    private static void setupGraph(Group graph, String name) {
+
     }
 
     public static void createSimulation(TextField wT, TextField rT, TextField lT, ActionEvent event) {
