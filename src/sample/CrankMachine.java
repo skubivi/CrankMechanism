@@ -5,6 +5,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CrankMachine {
     private double w;
     private double r;
@@ -14,7 +17,9 @@ public class CrankMachine {
     private Rectangle piston;
     private Line rod;
     private Line crank;
-    CrankMachine(double w, double r, double l, double width, double height){
+    ArrayList<Line> surfaces = new ArrayList<>();
+
+    CrankMachine(double w, double r, double l, double width, double height) {
         double rectSize = Math.min(width - r * 2 - l, 150);
         double space = width - (rectSize + r * 2 + l);
         this.w = w;
@@ -34,6 +39,21 @@ public class CrankMachine {
         //Создание шатуна и кривошипа
         rod = new Line(space / 2 + r * 2, height / 2, space / 2 + r * 2 + l, height / 2);
         crank = new Line(space / 2 + r, height / 2, space / 2 + r * 2, height / 2);
+
+        double surfaceLength = 2 * r + rectSize;
+        double surfaceStartX = roller.getCenterX() - r + l;
+        double surfaceStartY = piston.getY() + piston.getHeight();
+        double surfaceEndX = surfaceStartX + surfaceLength;
+        double surfaceEndY = surfaceStartY;
+
+        surfaces.add(new Line(surfaceStartX, surfaceStartY, surfaceEndX, surfaceEndY));
+        for (double i = surfaceStartX; i < surfaceEndX; i += 5) {
+            surfaces.add(new Line(i, surfaceStartY, Math.min(i + 10, surfaceEndX), Math.min(i + 10, surfaceEndX) - i + surfaceStartY));
+        }
+    }
+
+    public ArrayList<Line> getSurfaces() {
+        return surfaces;
     }
 
     public Circle getRoller() {
@@ -56,8 +76,8 @@ public class CrankMachine {
         return crank;
     }
 
-    public void move(double angle){
-        double x = r * Math.cos(angle) + Math.sqrt(l * l - Math.pow(r * Math.sin(angle),2));
+    public void move(double angle) {
+        double x = r * Math.cos(angle) + Math.sqrt(l * l - Math.pow(r * Math.sin(angle), 2));
         piston.setX(roller.getCenterX() + x);
         crank.setEndX(roller.getCenterX() + Math.cos(angle) * r);
         crank.setEndY(roller.getCenterY() + Math.sin(angle) * r);

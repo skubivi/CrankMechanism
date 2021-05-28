@@ -31,7 +31,7 @@ public class Main extends Application {
     final private static int WIDTH_SIM = 800;
     final private static int HEIGHT_SIM = 600;
 
-    final private static int WIDTH_GRAPH = 600;
+    final private static int WIDTH_GRAPH = 700;
     final private static int HEIGHT_GRAPH = 600;
 
     @Override
@@ -61,6 +61,9 @@ public class Main extends Application {
         simulation.setLayoutX(0);
         simulation.setLayoutY(0);
         simulation.getChildren().addAll(cM.getPiston(), cM.getRoller(), cM.getRoller2(), cM.getCrank(), cM.getRod());
+        for (int i = 0; i < cM.getSurfaces().size(); i++) {
+            simulation.getChildren().add(cM.getSurfaces().get(i));
+        }
 
         //Настройка области графика
         graphG.maxWidth(WIDTH_GRAPH);
@@ -87,17 +90,13 @@ public class Main extends Application {
         };
         anim.play();
 
+        //Создание нового окна
         Stage stage = new Stage();
         stage.setTitle("Crank Mechanism Simulation");
-        stage.setScene(new Scene(root, 1400, 600));
+        stage.setScene(new Scene(root, 1500, 600));
         stage.show();
 
-
         ((Node) (event.getSource())).getScene().getWindow().hide();
-    }
-
-    private static void setupGraph(Group graph, String name) {
-
     }
 
     public static void createSimulation(TextField wT, TextField rT, TextField lT, ActionEvent event) {
