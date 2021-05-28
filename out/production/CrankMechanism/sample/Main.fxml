@@ -11,38 +11,40 @@
     <top>
         <FlowPane alignment="TOP_CENTER"
                   hgap="10"
-                  vgap="30"
+                  vgap="20"
                   orientation="VERTICAL"
         >
-            <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
-                <Label minWidth="300">
-                    Угловая скорость вращения коленчатого вала (с^(-1))
+            <FlowPane orientation="HORIZONTAL" maxWidth="300">
+                <Label maxWidth="300">
+                    Введите данные (длина шатуна должна быть
                 </Label>
-                <TextField>
-
-                </TextField>
+                <Label maxWidth="300">
+                    больше радиуса кривошипа минимум в 2 раза)
+                </Label>
             </FlowPane>
             <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
                 <Label minWidth="300">
-                    Радиус кривошипа (м)
+                    Количество оборотов вала в минуту
                 </Label>
-                <TextField>
-
-                </TextField>
+                <TextField fx:id="wT"/>
             </FlowPane>
             <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
                 <Label minWidth="300">
-                    Длина шатуна (м)
+                    Радиус кривошипа
                 </Label>
-                <TextField>
-
-                </TextField>
+                <TextField fx:id="rT"/>
+            </FlowPane>
+            <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
+                <Label minWidth="300">
+                    Длина шатуна
+                </Label>
+                <TextField fx:id="lT"/>
             </FlowPane>
         </FlowPane>
     </top>
     <bottom>
         <FlowPane alignment="CENTER">
-            <Button>
+            <Button onAction="#click">
                 Смоделировать
             </Button>
         </FlowPane>
