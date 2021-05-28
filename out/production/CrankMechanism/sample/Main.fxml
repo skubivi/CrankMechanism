@@ -1,0 +1,50 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.FlowPane?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="sample.Controller"
+            xmlns:fx="http://javafx.com/fxml"
+>
+    <top>
+        <FlowPane alignment="TOP_CENTER"
+                  hgap="10"
+                  vgap="30"
+                  orientation="VERTICAL"
+        >
+            <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
+                <Label minWidth="300">
+                    Угловая скорость вращения коленчатого вала (с^(-1))
+                </Label>
+                <TextField>
+
+                </TextField>
+            </FlowPane>
+            <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
+                <Label minWidth="300">
+                    Радиус кривошипа (м)
+                </Label>
+                <TextField>
+
+                </TextField>
+            </FlowPane>
+            <FlowPane orientation="HORIZONTAL" maxWidth="300" vgap="5">
+                <Label minWidth="300">
+                    Длина шатуна (м)
+                </Label>
+                <TextField>
+
+                </TextField>
+            </FlowPane>
+        </FlowPane>
+    </top>
+    <bottom>
+        <FlowPane alignment="CENTER">
+            <Button>
+                Смоделировать
+            </Button>
+        </FlowPane>
+    </bottom>
+</BorderPane>
