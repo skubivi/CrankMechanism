@@ -5,23 +5,18 @@ import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.FileWriter;
 
 public class Main extends Application {
     private static double w;
@@ -52,6 +47,21 @@ public class Main extends Application {
 
         //Создание кривошипно-шатунного механизма
         CrankMachine cM = new CrankMachine(w, r, l, WIDTH_SIM, HEIGHT_SIM);
+        //Кнопка сохранения
+        Button save = new Button("Сохранить");
+        save.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    double n = w / 2 / Math.PI * 60;
+                    FileWriter fW = new FileWriter("w" + n + "_r" + r + "_l" + l);
+                    fW.write(cM.getW() + " " + cM.getR() + " " + cM.getL());
+                    fW.flush();
+                    fW.close();
+                } catch (Exception e) {
+                }
+            }
+        });
         //Создание графика
         Graph graph = new Graph(r, l);
 
@@ -64,6 +74,7 @@ public class Main extends Application {
         for (int i = 0; i < cM.getSurfaces().size(); i++) {
             simulation.getChildren().add(cM.getSurfaces().get(i));
         }
+        simulation.getChildren().add(save);
 
         //Настройка области графика
         graphG.maxWidth(WIDTH_GRAPH);
@@ -99,14 +110,12 @@ public class Main extends Application {
         ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 
-    public static void createSimulation(TextField wT, TextField rT, TextField lT, ActionEvent event) {
+    public static void createSimulation(double wT, double rT, double lT, ActionEvent event) {
         try {
-            double n = Double.parseDouble(wT.getCharacters().toString());
-            w = 2 * Math.PI * n / 60;
-            r = Double.parseDouble(rT.getCharacters().toString());
-            l = Double.parseDouble(lT.getCharacters().toString());
+            w = wT;
+            r = rT;
+            l = lT;
             if (l < 2 * r) throw new NumberFormatException();
-
             startingSimulation(event);
         } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

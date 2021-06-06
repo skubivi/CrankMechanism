@@ -2,8 +2,6 @@ package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class Controller {
@@ -16,6 +14,19 @@ public class Controller {
 
     @FXML
     private void click(ActionEvent event) {
-        Main.createSimulation(wT, rT, lT, event);
+        double n = Double.parseDouble(wT.getCharacters().toString());
+        double w = 2 * Math.PI * n / 60;
+        double r = Double.parseDouble(rT.getCharacters().toString());
+        double l = Double.parseDouble(lT.getCharacters().toString());
+        Main.createSimulation(w, r, l, event);
+    }
+
+    @FXML
+    private void load(ActionEvent event) {
+        try {
+            Load.start(event);
+        } catch (Exception e) {
+
+        }
     }
 }

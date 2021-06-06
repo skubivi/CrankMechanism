@@ -5,10 +5,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
-public class CrankMachine {
+public class CrankMachine implements Serializable {
     private double w;
     private double r;
     private double l;
@@ -18,6 +18,18 @@ public class CrankMachine {
     private Line rod;
     private Line crank;
     ArrayList<Line> surfaces = new ArrayList<>();
+
+    public double getW() {
+        return w;
+    }
+
+    public double getR() {
+        return r;
+    }
+
+    public double getL() {
+        return l;
+    }
 
     CrankMachine(double w, double r, double l, double width, double height) {
         double rectSize = Math.min(width - r * 2 - l, 150);
@@ -85,6 +97,4 @@ public class CrankMachine {
         rod.setStartX(crank.getEndX());
         rod.setStartY(crank.getEndY());
     }
-
-
 }

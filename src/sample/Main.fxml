@@ -1,4 +1,3 @@
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.FlowPane?>
 
 <?import javafx.scene.control.Button?>
@@ -42,11 +41,17 @@
             </FlowPane>
         </FlowPane>
     </top>
-    <bottom>
-        <FlowPane alignment="CENTER">
+    <center>
+        <FlowPane alignment="BOTTOM_CENTER"
+                  hgap="10"
+                  vgap="20"
+                  orientation="VERTICAL">
+            <Button onAction="#load">
+                Загрузить
+            </Button>
             <Button onAction="#click">
                 Смоделировать
             </Button>
         </FlowPane>
-    </bottom>
+    </center>
 </BorderPane>
